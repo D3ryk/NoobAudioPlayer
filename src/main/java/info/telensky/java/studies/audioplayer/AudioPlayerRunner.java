@@ -2,6 +2,8 @@ package info.telensky.java.studies.audioplayer;
 
 import info.telensky.java.studies.audioplayer.player.AudioPlayer;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,39 +14,55 @@ import javazoom.jl.decoder.JavaLayerException;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class AudioPlayerRunner extends Application{
+public class AudioPlayerRunner extends Application implements EventHandler<ActionEvent> {
 
-    Button playButton;
-    Button stopButton;
-    Button pauseButton;
+    private final Button PLAY_BUTTON = new Button();
+    private final Button STOP_BUTTON = new Button();
+    private final Button PAUSE_BUTTON = new Button();
 
     public static void main(String args[]) throws InterruptedException {
         launch(args);
-        //AudioPlayerRunner.runTestSong();
     }
 
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Noob Audio Player");
-        this.playButton = new Button();
-        this.stopButton = new Button();
-        this.pauseButton = new Button();
 
-        this.playButton.setText("Play");
-        this.stopButton.setText("Stop");
-        this.pauseButton.setText("Pause");
+        PLAY_BUTTON.setText("Play");
+        STOP_BUTTON.setText("Stop");
+        PAUSE_BUTTON.setText("Pause");
+
+        PLAY_BUTTON.setOnAction(this);
+        STOP_BUTTON.setOnAction(this);
+        PAUSE_BUTTON.setOnAction(this);
 
         StackPane layout = new StackPane();
-        StackPane.setAlignment(this.playButton, Pos.TOP_CENTER);
-        StackPane.setAlignment(this.pauseButton, Pos.CENTER);
-        StackPane.setAlignment(this.stopButton, Pos.BOTTOM_CENTER);
+        StackPane.setAlignment(PLAY_BUTTON, Pos.TOP_CENTER);
+        StackPane.setAlignment(PAUSE_BUTTON, Pos.CENTER);
+        StackPane.setAlignment(STOP_BUTTON, Pos.BOTTOM_CENTER);
 
-        layout.getChildren().add(this.playButton);
-        layout.getChildren().add(this.pauseButton);
-        layout.getChildren().add(this.stopButton);
+        layout.getChildren().add(PLAY_BUTTON);
+        layout.getChildren().add(PAUSE_BUTTON);
+        layout.getChildren().add(STOP_BUTTON);
 
         Scene scene = new Scene(layout, 200, 300);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+
+    public void handle(ActionEvent event) {
+        if (event.getSource() == PLAY_BUTTON) {
+            System.out.println("Play button");
+            AudioPlayerRunner.runTestSong();
+        }
+
+        if (event.getSource() == PAUSE_BUTTON) {
+            System.out.println("Pause button");
+        }
+
+        if (event.getSource() == STOP_BUTTON) {
+            System.out.println("Stop button");
+        }
     }
 
     private static void runTestSong() {
