@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 public class AudioPlayerRunner {
 
     public static void main(String args[]) throws InterruptedException {
-        File file = new File("src/main/resources/SoundFile.mp3");
+        File file = new File("src/main/resources/audioFile.mp3");
         AudioPlayer audioPlayer = null;
 
         try {

@@ -10,15 +10,23 @@ import java.io.FileNotFoundException;
 public class AudioPlayer implements NoobPlayer {
 
     private AdvancedPlayer player;
+    private int startFrame;
+    private int endFrame;
 
     public AudioPlayer(File file) throws JavaLayerException, FileNotFoundException {
         FileInputStream fis = new FileInputStream(file.getAbsolutePath());
         this.player = new AdvancedPlayer(fis);
+        this.startFrame = 0;
+        this.endFrame = Integer.MAX_VALUE;
     }
 
     public void play() {
+        this.play(this.startFrame, this.endFrame);
+    }
+
+    private void play(int startFrame, int endFrame) {
         try {
-            this.player.play();
+            this.player.play(startFrame, endFrame);
         } catch (JavaLayerException e) {
             e.printStackTrace();
         }
@@ -34,9 +42,5 @@ public class AudioPlayer implements NoobPlayer {
 
     public void move(int seconds) throws Exception {
         throw new Exception("Needs to be implemented");
-    }
-
-    public void close() {
-        System.out.println("Closing audio player.");
     }
 }
